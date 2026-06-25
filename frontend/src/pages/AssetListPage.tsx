@@ -1,4 +1,11 @@
-import { ArrowRight, ChevronLeft, ChevronRight, PackageSearch, RefreshCw, Search } from "lucide-react";
+import {
+  ArrowRight,
+  ChevronLeft,
+  ChevronRight,
+  PackageSearch,
+  RefreshCw,
+  Search,
+} from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
@@ -68,7 +75,9 @@ export function AssetListPage() {
       return;
     }
 
-    setToastMessage(`申請を受け付けました。 申請ID: ${locationState.toastRequestId}`);
+    setToastMessage(
+      `申請を受け付けました。 申請ID: ${locationState.toastRequestId}`,
+    );
     navigate(location.pathname, { replace: true, state: null });
   }, [location.pathname, locationState?.toastRequestId, navigate]);
 
@@ -108,7 +117,11 @@ export function AssetListPage() {
           return;
         }
 
-        setErrorMessage(error instanceof ApiClientError ? error.message : "カテゴリ一覧の取得に失敗しました。");
+        setErrorMessage(
+          error instanceof ApiClientError
+            ? error.message
+            : "カテゴリ一覧の取得に失敗しました。",
+        );
       }
     }
 
@@ -148,7 +161,11 @@ export function AssetListPage() {
           return;
         }
 
-        setErrorMessage(error instanceof ApiClientError ? error.message : "備品一覧の取得に失敗しました。");
+        setErrorMessage(
+          error instanceof ApiClientError
+            ? error.message
+            : "備品一覧の取得に失敗しました。",
+        );
       } finally {
         if (!abortController.signal.aborted) {
           setIsLoading(false);
@@ -162,17 +179,22 @@ export function AssetListPage() {
     };
   }, [currentPage, nameSort, query, selectedCategory]);
 
+  // 一覧下部に出す表示範囲とページ番号を計算する（例：1 - 20 / 55　< 1 2 3 >）
   const visibleStart = totalCount === 0 ? 0 : (currentPage - 1) * pageSize + 1;
   const visibleEnd = totalCount === 0 ? 0 : visibleStart + assets.length - 1;
   const paginationPages = useMemo(() => {
     const startPage = Math.max(1, Math.min(currentPage - 1, totalPages - 2));
     const endPage = Math.min(totalPages, startPage + 2);
 
-    return Array.from({ length: endPage - startPage + 1 }, (_, index) => startPage + index);
+    return Array.from(
+      { length: endPage - startPage + 1 },
+      (_, index) => startPage + index,
+    );
   }, [currentPage, totalPages]);
 
-  // ページ番号を範囲内に丸めて一覧の表示ページを切り替える
+  // ページネーション（ページ番号ボタン・ <・ >）を押したときの共通処理
   function handlePageChange(page: number) {
+    // <・ >を押した場合に1ページ未満や最終ページ超えを防ぐ
     const nextPage = Math.max(1, Math.min(page, totalPages));
 
     if (nextPage === currentPage) {
@@ -204,26 +226,33 @@ export function AssetListPage() {
             <div className="flex flex-col gap-3 lg:flex-row lg:items-center">
               <div>
                 <p className="text-sm font-medium text-teal-700">AssetFlow</p>
-                <h1 className="mt-1 text-3xl font-semibold tracking-normal text-slate-950">備品一覧</h1>
+                <h1 className="mt-1 text-3xl font-semibold tracking-normal text-slate-950">
+                  備品一覧
+                </h1>
               </div>
 
               <div className="grid grid-cols-2 gap-2 sm:flex">
                 <div className="min-w-24 rounded-md border border-slate-200 bg-white px-3 py-2">
-                <p className="text-xs text-slate-500">取扱品目数</p>
-                <p className="mt-1 text-lg font-semibold">{totalItemCount}</p>
-              </div>
+                  <p className="text-xs text-slate-500">取扱品目数</p>
+                  <p className="mt-1 text-lg font-semibold">{totalItemCount}</p>
+                </div>
                 <div className="min-w-24 rounded-md border border-slate-200 bg-white px-3 py-2">
-                <p className="text-xs text-slate-500">総在庫数</p>
-                <p className="mt-1 text-lg font-semibold">{totalStock}</p>
-              </div>
+                  <p className="text-xs text-slate-500">総在庫数</p>
+                  <p className="mt-1 text-lg font-semibold">{totalStock}</p>
+                </div>
                 <div className="min-w-24 rounded-md border border-slate-200 bg-white px-3 py-2">
-                <p className="text-xs text-slate-500">要確認</p>
-                <p className="mt-1 text-lg font-semibold text-red-600">{lowStockCount}</p>
+                  <p className="text-xs text-slate-500">要確認</p>
+                  <p className="mt-1 text-lg font-semibold text-red-600">
+                    {lowStockCount}
+                  </p>
                 </div>
               </div>
             </div>
 
-            <nav aria-label="メインナビゲーション" className="flex flex-wrap justify-start gap-2 lg:justify-end">
+            <nav
+              aria-label="メインナビゲーション"
+              className="flex flex-wrap justify-start gap-2 lg:justify-end"
+            >
               <Link
                 className="inline-flex h-10 items-center justify-center rounded-md border border-slate-300 bg-white px-4 text-sm font-medium text-slate-700 transition hover:bg-slate-100"
                 to="/my-requests"
@@ -301,14 +330,29 @@ export function AssetListPage() {
                 <thead className="bg-slate-100 text-xs uppercase text-slate-500">
                   <tr>
                     <th className="w-20 px-5 py-3 font-semibold">No.</th>
-                    <th className="px-5 py-3 font-semibold" aria-sort={nameSort === "name_asc" ? "ascending" : nameSort === "name_desc" ? "descending" : "none"}>
+                    <th
+                      className="px-5 py-3 font-semibold"
+                      aria-sort={
+                        nameSort === "name_asc"
+                          ? "ascending"
+                          : nameSort === "name_desc"
+                            ? "descending"
+                            : "none"
+                      }
+                    >
                       <button
                         className="inline-flex items-center gap-1 text-xs font-semibold uppercase text-slate-500 transition hover:text-slate-800"
                         onClick={handleNameSortToggle}
                         type="button"
                       >
                         備品名
-                        <span className="text-[10px] leading-none">{nameSort === "name_asc" ? "▲" : nameSort === "name_desc" ? "▼" : "↕"}</span>
+                        <span className="text-[10px] leading-none">
+                          {nameSort === "name_asc"
+                            ? "▲"
+                            : nameSort === "name_desc"
+                              ? "▼"
+                              : "↕"}
+                        </span>
                       </button>
                     </th>
                     <th className="px-5 py-3 font-semibold">カテゴリ</th>
@@ -323,24 +367,41 @@ export function AssetListPage() {
                     const itemNumber = index + 1 + (currentPage - 1) * pageSize;
 
                     return (
-                      <tr className={isReservationFull ? "transition" : "group transition hover:bg-teal-50/50"} key={asset.id}>
-                        <td className="px-5 py-4 font-medium text-slate-500">{itemNumber}</td>
+                      <tr
+                        className={
+                          isReservationFull
+                            ? "transition"
+                            : "group transition hover:bg-teal-50/50"
+                        }
+                        key={asset.id}
+                      >
+                        <td className="px-5 py-4 font-medium text-slate-500">
+                          {itemNumber}
+                        </td>
                         <td className="px-5 py-4">
                           <div className="flex items-center gap-3">
                             <div className="flex size-9 shrink-0 items-center justify-center rounded-md bg-slate-100 text-slate-600">
                               <PackageSearch className="size-4" />
                             </div>
-                            <span className="font-medium text-slate-950">{asset.name}</span>
+                            <span className="font-medium text-slate-950">
+                              {asset.name}
+                            </span>
                           </div>
                         </td>
-                        <td className="px-5 py-4 text-slate-600">{asset.category}</td>
-                        <td className={`px-5 py-4 text-base font-semibold ${stockClassName(asset.effective_stock)}`}>
+                        <td className="px-5 py-4 text-slate-600">
+                          {asset.category}
+                        </td>
+                        <td
+                          className={`px-5 py-4 text-base font-semibold ${stockClassName(asset.effective_stock)}`}
+                        >
                           {asset.effective_stock}
                         </td>
                         <td className="px-5 py-4">
                           <span
                             className={`inline-flex rounded-md px-2 py-1 text-xs font-medium ${
-                              isReservationFull ? "bg-red-50 text-red-700" : "bg-teal-50 text-teal-700"
+                              isReservationFull
+                                ? "bg-red-50 text-red-700"
+                                : "bg-teal-50 text-teal-700"
                             }`}
                           >
                             {statusLabel(asset)}
@@ -364,7 +425,10 @@ export function AssetListPage() {
 
                   {!isLoading && assets.length === 0 ? (
                     <tr>
-                      <td className="px-5 py-12 text-center text-sm text-slate-500" colSpan={6}>
+                      <td
+                        className="px-5 py-12 text-center text-sm text-slate-500"
+                        colSpan={6}
+                      >
                         該当する備品が見つかりませんでした。条件を変えて検索してください。
                       </td>
                     </tr>
@@ -374,11 +438,15 @@ export function AssetListPage() {
             </div>
 
             {isLoading ? (
-              <div className="border-t border-slate-200 px-5 py-3 text-sm text-slate-500">読み込み中...</div>
+              <div className="border-t border-slate-200 px-5 py-3 text-sm text-slate-500">
+                読み込み中...
+              </div>
             ) : null}
 
             <div className="flex items-center justify-end gap-4 border-t border-slate-200 px-5 py-3">
-              <p className="text-sm text-slate-500">{visibleStart} - {visibleEnd} / {totalCount}</p>
+              <p className="text-sm text-slate-500">
+                {visibleStart} - {visibleEnd} / {totalCount}
+              </p>
 
               <div className="flex items-center gap-1">
                 <button

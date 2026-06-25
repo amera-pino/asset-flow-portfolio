@@ -17,7 +17,12 @@ export class ApiClientError extends Error {
   status: number;
   details?: unknown;
 
-  constructor(message: string, code: string, status: number, details?: unknown) {
+  constructor(
+    message: string,
+    code: string,
+    status: number,
+    details?: unknown,
+  ) {
     super(message);
     this.name = "ApiClientError";
     this.code = code;
@@ -26,7 +31,8 @@ export class ApiClientError extends Error {
   }
 }
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ?? "http://localhost:8000";
+const API_BASE_URL =
+  import.meta.env.VITE_API_BASE_URL ?? "http://localhost:8000";
 
 type RequestOptions = Omit<RequestInit, "body"> & {
   body?: unknown;
@@ -47,7 +53,10 @@ function buildUrl(path: string, query?: RequestOptions["query"]) {
 }
 
 // JSON 送信、クエリ付与、共通レスポンスのエラー処理を標準化する
-export async function apiFetch<T>(path: string, options: RequestOptions = {}): Promise<T> {
+export async function apiFetch<T>(
+  path: string,
+  options: RequestOptions = {},
+): Promise<T> {
   const { body, headers, query, ...requestInit } = options;
   const response = await fetch(buildUrl(path, query), {
     ...requestInit,
@@ -63,7 +72,11 @@ export async function apiFetch<T>(path: string, options: RequestOptions = {}): P
   try {
     payload = (await response.json()) as ApiResponse<T>;
   } catch {
-    throw new ApiClientError("APIレスポンスの読み込みに失敗しました。", "INVALID_RESPONSE", response.status);
+    throw new ApiClientError(
+      "APIレスポンスの読み込みに失敗しました。",
+      "INVALID_RESPONSE",
+      response.status,
+    );
   }
 
   if (!response.ok || !payload.success) {
