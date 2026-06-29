@@ -19,3 +19,7 @@ frontend/.env
 # OSが勝手に作るゴミファイル
 .DS_Store
 Thumbs.db
+
+# その他
+*.code-workspace
+.vscode/

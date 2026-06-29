@@ -2,10 +2,13 @@
   "name": "AssetFlow",
   "dockerComposeFile": "../docker-compose.yml",
   "service": "backend",
-  "workspaceFolder": "/workspaces/AssetFlow",
-  "workspaceMount": "source=${localWorkspaceFolder},target=/workspaces/AssetFlow,type=bind,consistency=cached",
+  "workspaceFolder": "/workspace",
   "shutdownAction": "stopCompose",
-  "forwardPorts": [5432, 8000, 5173],
+  "forwardPorts": [
+    5432,
+    8000,
+    5173
+  ],
   "customizations": {
     "vscode": {
       "extensions": [
