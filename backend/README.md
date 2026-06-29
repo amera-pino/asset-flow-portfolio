@@ -150,3 +150,23 @@ curl http://localhost:8000/health
 - `backend/Dockerfile` は、バックエンドを Docker イメージとして起動するための定義です。
 - 開発中は `Open in Container` か `docker compose up -d` を使うのが基本です。
 - ローカルでバックエンドだけ試したい場合は、`backend/.venv` を使って `uvicorn` を直接起動できます。
+
+## トラブルシューティング
+
+### VS Code で `fastapi` などが見つからない場合
+
+`fastapi` や `sqlalchemy` に黄色い波線が出る場合は、VS Code が参照している Python interpreter が `backend/.venv` ではなく、グローバル Python になっている可能性があります。
+
+その場合は、右下の Python 表示から次を選び直します。
+
+```text
+/workspace/backend/.venv/bin/python
+```
+
+選び直したあとも表示がすぐ反映されない場合は、`Developer: Reload Window` を実行すると改善することがあります。
+
+### ターミナルが毎回 `.venv` に入る場合
+
+VS Code の設定で `python.terminal.activateEnvironment` が有効になっていると、新しいターミナルでも自動的に仮想環境が有効になります。
+
+Git 作業用と Python 作業用でターミナルを分けたい場合は、この設定を `false` にしておくと扱いやすくなります。
