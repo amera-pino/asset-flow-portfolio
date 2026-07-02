@@ -52,7 +52,7 @@
 ## Files To Read Before Each Quiz
 
 - この `study-policy.md`
-- `work/study-log/` にあるこれまでの学習記録
+- `work/frontend-study-log/` にあるこれまでの学習記録
 - 特に直近のログと、そこで曖昧だった論点
 
 ## How To Prepare The Next Quiz
