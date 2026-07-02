@@ -4,9 +4,9 @@
 
 ## Instructions
 
-1. まず `/Users/nomataito/Code/asset-flow/work/study-log/study-policy.md` を読んで、学習方針と出題方針を確認してください。
-2. 次に `/Users/nomataito/Code/asset-flow/work/study-log/study-log-template.md` を確認し、日次ログの基本構成を把握してください。
-3. そのあと `/Users/nomataito/Code/asset-flow/work/study-log/` 配下の学習ログを確認してください。
+1. まず `/Users/nomataito/Code/asset-flow/work/frontend-study-log/study-policy.md` を読んで、学習方針と出題方針を確認してください。
+2. 次に `/Users/nomataito/Code/asset-flow/work/frontend-study-log/study-log-template.md` を確認し、日次ログの基本構成を把握してください。
+3. そのあと `/Users/nomataito/Code/asset-flow/work/frontend-study-log/` 配下の学習ログを確認してください。
 4. 特に直近のログを優先して読み、前日までに出題した内容、正答状況、曖昧だった論点を把握してください。
 5. その内容を踏まえて、今日のテストで扱う対象ファイルと論点を決めてください。
 6. 出題は基本的に処理の流れ順で進めてください。
