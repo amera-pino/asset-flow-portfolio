@@ -21,7 +21,7 @@ class ApiResponse(BaseModel, Generic[DataT]):
 
 
 # route 層から成功時の共通レスポンス辞書を作る
-def success_response(data: DataT) -> dict[str, Any]:
+def success_response(data: object) -> dict[str, Any]:
     return {"success": True, "data": data, "error": None}
 
 
