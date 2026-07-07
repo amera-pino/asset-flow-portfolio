@@ -3,6 +3,7 @@ import { FormEvent, useEffect, useMemo, useRef, useState } from "react";
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 
 import { ApiClientError, apiFetch } from "../lib/api";
+import { DEMO_USER_NAME } from "../constants/demoUser";
 import type { Asset } from "../types/asset";
 import type { AssetRequest, AssetRequestCreate } from "../types/assetRequest";
 
@@ -25,7 +26,7 @@ export function AssetRequestPage() {
   const redirectTimerRef = useRef<number | null>(null);
 
   const [asset, setAsset] = useState<Asset | null>(locationState?.asset ?? null);
-  const [requesterName, setRequesterName] = useState("");
+  const [requesterName, setRequesterName] = useState(DEMO_USER_NAME);
   const [quantity, setQuantity] = useState(1);
   const [startDate, setStartDate] = useState(initialStartDate);
   const [endDate, setEndDate] = useState(initialStartDate);
@@ -95,7 +96,7 @@ export function AssetRequestPage() {
     }
 
     const resetDate = todayString();
-    setRequesterName("");
+    setRequesterName(DEMO_USER_NAME);
     setQuantity(1);
     setStartDate(resetDate);
     setEndDate(resetDate);
@@ -237,10 +238,10 @@ export function AssetRequestPage() {
                 <label className="flex flex-col gap-2">
                   <span className="text-sm font-medium text-slate-700">申請者名</span>
                   <input
-                    className="h-11 rounded-md border border-slate-300 px-3 text-sm outline-none transition focus:border-teal-600 focus:ring-2 focus:ring-teal-100"
+                    className="h-11 cursor-not-allowed rounded-md border border-slate-300 bg-slate-100 px-3 text-sm text-slate-500 outline-none transition focus:border-teal-600 focus:ring-2 focus:ring-teal-100"
                     maxLength={120}
-                    onChange={(event) => setRequesterName(event.target.value)}
-                    placeholder="山田 太郎"
+                    readOnly
+                    aria-readonly="true"
                     required
                     type="text"
                     value={requesterName}

@@ -243,7 +243,7 @@ export function AssetListPage() {
                   <p className="mt-1 text-lg font-semibold">{totalStock}</p>
                 </div>
                 <div className="min-w-24 rounded-md border border-slate-200 bg-white px-3 py-2">
-                  <p className="text-xs text-slate-500">要確認</p>
+                  <p className="text-xs text-slate-500">要確認品目数</p>
                   <p className="mt-1 text-lg font-semibold text-red-600">
                     {lowStockCount}
                   </p>

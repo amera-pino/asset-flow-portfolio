@@ -94,9 +94,6 @@ export function MyRequestsPage() {
 
     return Array.from({ length: endPage - startPage + 1 }, (_, index) => startPage + index);
   }, [currentPage, totalPages]);
-  const displayUserName = activeRequests[0]?.requester_name
-    ? `${activeRequests[0].requester_name} (ID: 1)`
-    : "テストユーザー (ID: 1)";
 
   // 初回表示時にアクティブな申請一覧を読み込む
   useEffect(() => {
@@ -244,10 +241,6 @@ export function MyRequestsPage() {
               </div>
 
               <div className="grid grid-cols-2 gap-2 sm:flex">
-                <div className="min-w-24 rounded-md border border-slate-200 bg-white px-3 py-2">
-                <p className="text-xs text-slate-500">ログインユーザー</p>
-                <p className="mt-1 text-lg font-semibold text-slate-950">{displayUserName}</p>
-              </div>
                 <div className="min-w-24 rounded-md border border-slate-200 bg-white px-3 py-2">
                 <p className="text-xs text-slate-500">承認待ち</p>
                 <p className="mt-1 text-lg font-semibold text-slate-950">{pendingCount}</p>
