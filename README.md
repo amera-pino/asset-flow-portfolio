@@ -48,10 +48,6 @@ flowchart LR
     F --> B
     F --> C
     F --> D
-
-    G["Production on Render"] --> H["Render Web Service"]
-    G --> I["Render Postgres"]
-    H --> I
 ```
 
 ## ローカル起動方法
