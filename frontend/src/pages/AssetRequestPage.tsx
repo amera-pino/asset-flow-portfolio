@@ -13,7 +13,35 @@ type LocationState = {
 
 // 申請フォームの日付初期値を YYYY-MM-DD で作る
 function todayString() {
-  return new Date().toISOString().slice(0, 10);
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = `${now.getMonth() + 1}`.padStart(2, "0");
+  const day = `${now.getDate()}`.padStart(2, "0");
+  return `${year}-${month}-${day}`;
+}
+
+function addMonths(dateString: string, months: number) {
+  const [year, month, day] = dateString.split("-").map(Number);
+  const date = new Date(year, month - 1, day);
+  date.setMonth(date.getMonth() + months);
+
+  const resultYear = date.getFullYear();
+  const resultMonth = `${date.getMonth() + 1}`.padStart(2, "0");
+  const resultDay = `${date.getDate()}`.padStart(2, "0");
+  return `${resultYear}-${resultMonth}-${resultDay}`;
+}
+
+function formatJapaneseDate(dateString: string) {
+  const [year, month, day] = dateString.split("-").map(Number);
+  return `${year}年${month}月${day}日`;
+}
+
+function normalizeQuantityInput(value: string) {
+  if (value === "") {
+    return "";
+  }
+
+  return value.replace(/^0+(?=\d)/, "");
 }
 
 // 備品詳細と申請フォームを表示し、POST /api/requests で借用申請する画面
@@ -27,13 +55,15 @@ export function AssetRequestPage() {
 
   const [asset, setAsset] = useState<Asset | null>(locationState?.asset ?? null);
   const [requesterName, setRequesterName] = useState(DEMO_USER_NAME);
-  const [quantity, setQuantity] = useState(1);
+  const [quantity, setQuantity] = useState("1");
   const [startDate, setStartDate] = useState(initialStartDate);
   const [endDate, setEndDate] = useState(initialStartDate);
   const [reason, setReason] = useState("");
   const [isLoadingAsset, setIsLoadingAsset] = useState(!locationState?.asset);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const requestDeadlineDate = useMemo(() => addMonths(initialStartDate, 6), [initialStartDate]);
+  const requestDeadlineLabel = useMemo(() => formatJapaneseDate(requestDeadlineDate), [requestDeadlineDate]);
 
   const numericAssetId = useMemo(() => Number(assetId), [assetId]);
 
@@ -97,7 +127,7 @@ export function AssetRequestPage() {
 
     const resetDate = todayString();
     setRequesterName(DEMO_USER_NAME);
-    setQuantity(1);
+    setQuantity("1");
     setStartDate(resetDate);
     setEndDate(resetDate);
     setReason("");
@@ -114,12 +144,18 @@ export function AssetRequestPage() {
       return "申請者名を入力してください。";
     }
 
-    if (!Number.isFinite(quantity) || quantity < 1) {
+    const numericQuantity = Number(quantity);
+
+    if (!Number.isInteger(numericQuantity) || numericQuantity < 1) {
       return "申請数量は1以上で入力してください。";
     }
 
     if (!startDate) {
       return "開始日を入力してください。";
+    }
+
+    if (startDate < initialStartDate) {
+      return "開始日は本日以降の日付を指定してください。";
     }
 
     if (!endDate) {
@@ -138,7 +174,7 @@ export function AssetRequestPage() {
       return "予約満了のため申請できません。";
     }
 
-    if (quantity > asset.effective_stock) {
+    if (numericQuantity > asset.effective_stock) {
       return "申請数量が有効在庫数を超えています。";
     }
 
@@ -146,8 +182,23 @@ export function AssetRequestPage() {
       return "終了日は開始日以降の日付を指定してください。";
     }
 
+    if (endDate > requestDeadlineDate) {
+      return `終了日は本日から6ヶ月後以内（${requestDeadlineLabel}まで）で指定してください。`;
+    }
+
     return null;
-  }, [asset, endDate, numericAssetId, quantity, reason, requesterName, startDate]);
+  }, [
+    asset,
+    endDate,
+    initialStartDate,
+    numericAssetId,
+    quantity,
+    reason,
+    requestDeadlineDate,
+    requestDeadlineLabel,
+    requesterName,
+    startDate,
+  ]);
 
   // フォーム内容を POST /api/requests へ送り、成功時は一覧へ戻す
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
@@ -158,13 +209,14 @@ export function AssetRequestPage() {
       return;
     }
 
+    const requestedQuantity = Number(quantity);
     const payload: AssetRequestCreate = {
       asset_id: asset.id,
       requester_name: requesterName.trim(),
       start_date: startDate,
       end_date: endDate,
       reason: reason.trim(),
-      quantity,
+      quantity: requestedQuantity,
     };
 
     setIsSubmitting(true);
@@ -176,13 +228,13 @@ export function AssetRequestPage() {
         body: payload,
       });
       setAsset((currentAsset) =>
-        currentAsset
-          ? {
-              ...currentAsset,
-              consuming_quantity: currentAsset.consuming_quantity + quantity,
-              effective_stock: Math.max(currentAsset.effective_stock - quantity, 0),
-            }
-          : currentAsset,
+              currentAsset
+                ? {
+                    ...currentAsset,
+                    consuming_quantity: currentAsset.consuming_quantity + requestedQuantity,
+                    effective_stock: Math.max(currentAsset.effective_stock - requestedQuantity, 0),
+                  }
+                : currentAsset,
       );
       redirectTimerRef.current = window.setTimeout(() => {
         navigate("/", {
@@ -254,9 +306,10 @@ export function AssetRequestPage() {
                     className="h-11 rounded-md border border-slate-300 px-3 text-sm outline-none transition focus:border-teal-600 focus:ring-2 focus:ring-teal-100"
                     max={asset.effective_stock}
                     min={1}
-                    onChange={(event) => setQuantity(Number(event.target.value))}
+                    onChange={(event) => setQuantity(normalizeQuantityInput(event.target.value))}
                     required
                     type="number"
+                    inputMode="numeric"
                     value={quantity}
                   />
                 </label>
@@ -278,6 +331,7 @@ export function AssetRequestPage() {
                   <input
                     className="h-11 rounded-md border border-slate-300 px-3 text-sm outline-none transition focus:border-teal-600 focus:ring-2 focus:ring-teal-100"
                     min={startDate}
+                    max={requestDeadlineDate}
                     onChange={(event) => setEndDate(event.target.value)}
                     required
                     type="date"
