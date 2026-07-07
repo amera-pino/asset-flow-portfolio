@@ -145,6 +145,8 @@ sequenceDiagram
 また、API 通信は `src/lib/api.ts` の `apiFetch` で共通化されています。
 画面側はこの関数を通して FastAPI バックエンドへアクセスします。
 
+`VITE_API_BASE_URL` はルートの `.env.example` で示している通り、公開環境に合わせて差し替えられるようにしています。
+
 ```mermaid
 flowchart LR
     A["main.tsx"] --> B["BrowserRouter / Routes"]

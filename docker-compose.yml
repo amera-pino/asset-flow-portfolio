@@ -4,15 +4,19 @@ services:
     image: postgres:16-alpine
     container_name: assetflow-db
     environment:
-      POSTGRES_DB: assetflow
-      POSTGRES_USER: assetflow
-      POSTGRES_PASSWORD: assetflow_password
+      POSTGRES_DB: ${POSTGRES_DB:-assetflow}
+      POSTGRES_USER: ${POSTGRES_USER:-assetflow}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-change_me}
     ports:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U assetflow -d assetflow"]
+      test:
+        [
+          "CMD-SHELL",
+          "pg_isready -U ${POSTGRES_USER:-assetflow} -d ${POSTGRES_DB:-assetflow}",
+        ]
       interval: 5s
       timeout: 5s
       retries: 10
@@ -23,8 +27,8 @@ services:
       context: ./backend
     container_name: assetflow-backend
     environment:
-      DATABASE_URL: postgresql+psycopg2://assetflow:assetflow_password@db:5432/assetflow
-      CORS_ORIGINS: http://localhost:5173
+      DATABASE_URL: ${DATABASE_URL:-postgresql+psycopg2://assetflow:change_me@db:5432/assetflow}
+      CORS_ORIGINS: ${CORS_ORIGINS:-http://localhost:5173}
     ports:
       - "8000:8000"
     volumes:
@@ -40,7 +44,7 @@ services:
       context: ./frontend
     container_name: assetflow-frontend
     environment:
-      VITE_API_BASE_URL: http://localhost:8000
+      VITE_API_BASE_URL: ${VITE_API_BASE_URL:-http://localhost:8000}
     ports:
       - "5173:5173"
     volumes:

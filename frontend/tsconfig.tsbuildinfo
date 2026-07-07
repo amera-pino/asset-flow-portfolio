@@ -1,1 +1,0 @@
-{"root":["./src/main.tsx","./src/vite-env.d.ts","./src/lib/api.ts","./src/pages/assetlistpage.tsx","./src/pages/assetrequestpage.tsx","./src/pages/myrequestspage.tsx","./src/types/asset.ts","./src/types/assetrequest.ts"],"version":"5.7.2"}

@@ -4,7 +4,7 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class Settings(BaseSettings):
-    database_url: str = "postgresql+psycopg2://assetflow:assetflow_password@db:5432/assetflow"
+    database_url: str = "postgresql+psycopg2://assetflow:change_me@db:5432/assetflow"
     cors_origins: str = "http://localhost:5173"
 
     model_config = SettingsConfigDict(env_file=".env", extra="ignore")

@@ -126,6 +126,8 @@ docker compose up -d
 
 ## 環境変数
 
+公開用の初期設定は、ルートの `.env.example` をコピーして `.env` を作る想定です。
+
 `docker-compose.yml` では、バックエンドに次の環境変数を渡しています。
 
 - `DATABASE_URL`
