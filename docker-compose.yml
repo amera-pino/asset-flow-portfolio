@@ -2,7 +2,6 @@ services:
   db:
     # restart: always
     image: postgres:16-alpine
-    container_name: assetflow-db
     environment:
       POSTGRES_DB: ${POSTGRES_DB:-assetflow}
       POSTGRES_USER: ${POSTGRES_USER:-assetflow}
@@ -25,7 +24,6 @@ services:
     # restart: always
     build:
       context: ./backend
-    container_name: assetflow-backend
     environment:
       DATABASE_URL: ${DATABASE_URL:-postgresql+psycopg2://assetflow:change_me@db:5432/assetflow}
       CORS_ORIGINS: ${CORS_ORIGINS:-http://localhost:5173}
@@ -42,7 +40,6 @@ services:
     # restart: always
     build:
       context: ./frontend
-    container_name: assetflow-frontend
     environment:
       VITE_API_BASE_URL: ${VITE_API_BASE_URL:-http://localhost:8000}
     ports:

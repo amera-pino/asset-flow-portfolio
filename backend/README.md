@@ -172,3 +172,20 @@ curl http://localhost:8000/health
 VS Code の設定で `python.terminal.activateEnvironment` が有効になっていると、新しいターミナルでも自動的に仮想環境が有効になります。
 
 Git 作業用と Python 作業用でターミナルを分けたい場合は、この設定を `false` にしておくと扱いやすくなります。
+
+### ワークスペース名や配置を変えたあとに `.venv` が壊れる場合
+
+`venv` は作成時の絶対パスを内部に持つので、`/workspace/backend/.venv` のような場所で作ったものを別のパスに持っていくと、`python` や `pip` が見つからなくなることがあります。
+
+その場合は、古い `.venv` を作り直すのがいちばん簡単です。
+
+```bash
+cd /workspace/backend
+deactivate 2>/dev/null || true
+rm -rf .venv
+/usr/local/bin/python3 -m venv .venv
+source .venv/bin/activate
+python -m pip install -r requirements.txt
+```
+
+`which python` が `.venv/bin/python` を返せば、仮想環境は正しく使えています。
