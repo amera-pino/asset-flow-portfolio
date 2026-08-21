@@ -1,0 +1,55 @@
+asset_name,requester_name,user_id,start_date,end_date,reason,quantity,status
+"Dell 27"" 4K Monitor",一般ユーザー,1,2026-07-26,2026-07-31,"Dell 27"" 4K Monitor のテスト貸出申請",2,loaned
+HHKB Studio,一般ユーザー,1,2026-07-10,2026-07-28,HHKB Studio のテスト貸出申請,2,approved
+Magic Mouse,一般ユーザー,1,2026-07-28,2026-08-02,Magic Mouse のテスト貸出申請,1,loaned
+Herman Miller Aeron,一般ユーザー,1,2026-07-12,2026-07-30,Herman Miller Aeron のテスト貸出申請,2,loaned
+Jabra Speak2 75,一般ユーザー,1,2026-07-30,2026-08-04,Jabra Speak2 75 のテスト貸出申請,3,loaned
+Sony WH-1000XM5,一般ユーザー,1,2026-07-14,2026-08-01,Sony WH-1000XM5 のテスト貸出申請,1,loaned
+Anker 737 Power Bank,一般ユーザー,1,2026-08-01,2026-08-06,Anker 737 Power Bank のテスト貸出申請,2,loaned
+Apple MacBook Air 13,一般ユーザー,1,2026-07-16,2026-08-03,Apple MacBook Air 13 のテスト貸出申請,3,loaned
+ThinkPad X1 Carbon,一般ユーザー,1,2026-07-09,2026-07-27,ThinkPad X1 Carbon のテスト貸出申請,2,approved
+HP EliteBook 840,一般ユーザー,1,2026-07-27,2026-08-01,HP EliteBook 840 のテスト貸出申請,3,loaned
+ASUS Zenbook 14,一般ユーザー,1,2026-07-11,2026-07-29,ASUS Zenbook 14 のテスト貸出申請,1,loaned
+4K Display 32,一般ユーザー,1,2026-07-29,2026-08-03,4K Display 32 のテスト貸出申請,2,loaned
+2K Portable Monitor,一般ユーザー,1,2026-07-13,2026-07-31,2K Portable Monitor のテスト貸出申請,3,loaned
+液晶ディスプレイ 24インチ,一般ユーザー,1,2026-07-31,2026-08-05,液晶ディスプレイ 24インチ のテスト貸出申請,1,loaned
+BenQ ScreenBar Halo,一般ユーザー,1,2026-07-15,2026-08-02,BenQ ScreenBar Halo のテスト貸出申請,2,loaned
+モニターアーム シングル,一般ユーザー,1,2026-08-02,2026-08-07,モニターアーム シングル のテスト貸出申請,3,rejected
+Logitech MX Keys,一般ユーザー,1,2026-07-08,2026-07-26,Logitech MX Keys のテスト貸出申請,1,loaned
+Keychron K3 Pro,一般ユーザー,1,2026-07-26,2026-07-31,Keychron K3 Pro のテスト貸出申請,1,loaned
+日本語配列キーボード,一般ユーザー,1,2026-07-10,2026-07-28,日本語配列キーボード のテスト貸出申請,3,loaned
+テンキー付きキーボード,一般ユーザー,1,2026-07-28,2026-08-02,テンキー付きキーボード のテスト貸出申請,1,loaned
+Logitech MX Master 3S,一般ユーザー,1,2026-07-12,2026-07-30,Logitech MX Master 3S のテスト貸出申請,2,loaned
+USB-C Travel Mouse,一般ユーザー,1,2026-07-30,2026-08-04,USB-C Travel Mouse のテスト貸出申請,3,loaned
+静音ワイヤレスマウス,一般ユーザー,1,2026-07-14,2026-08-01,静音ワイヤレスマウス のテスト貸出申請,1,loaned
+Webカメラ 1080p,一般ユーザー,1,2026-08-01,2026-08-06,Webカメラ 1080p のテスト貸出申請,2,pending
+Logitech Brio 4K,一般ユーザー,1,2026-07-16,2026-08-03,Logitech Brio 4K のテスト貸出申請,3,loaned
+360 Meeting Camera,一般ユーザー,1,2026-07-25,2026-07-30,360 Meeting Camera のテスト貸出申請,1,pending
+Poly Studio P15,一般ユーザー,1,2026-07-09,2026-07-27,Poly Studio P15 のテスト貸出申請,2,loaned
+会議用スピーカーフォン,一般ユーザー,1,2026-07-27,2026-08-01,会議用スピーカーフォン のテスト貸出申請,3,pending
+Yamaha YVC-200,一般ユーザー,1,2026-07-11,2026-07-29,Yamaha YVC-200 のテスト貸出申請,1,loaned
+AirPods Pro 2,一般ユーザー,1,2026-07-29,2026-08-03,AirPods Pro 2 のテスト貸出申請,2,pending
+Bose QuietComfort,一般ユーザー,1,2026-07-13,2026-07-31,Bose QuietComfort のテスト貸出申請,3,loaned
+有線ヘッドセット,一般ユーザー,1,2026-07-31,2026-08-05,有線ヘッドセット のテスト貸出申請,1,pending
+ノイズキャンセルヘッドホン,一般ユーザー,1,2026-07-15,2026-08-02,ノイズキャンセルヘッドホン のテスト貸出申請,2,loaned
+USB-C Hub 7-in-1,一般ユーザー,1,2026-08-02,2026-08-07,USB-C Hub 7-in-1 のテスト貸出申請,3,pending
+HDMI Adapter,一般ユーザー,1,2026-07-08,2026-07-26,HDMI Adapter のテスト貸出申請,1,loaned
+65W USB-C Charger,一般ユーザー,1,2026-07-26,2026-07-31,65W USB-C Charger のテスト貸出申請,2,pending
+100W GaN Charger,一般ユーザー,1,2026-07-10,2026-07-28,100W GaN Charger のテスト貸出申請,3,rejected
+延長電源タップ,一般ユーザー,1,2026-07-28,2026-08-02,延長電源タップ のテスト貸出申請,1,pending
+iPad Pro 11,一般ユーザー,1,2026-07-12,2026-07-30,iPad Pro 11 のテスト貸出申請,2,loaned
+iPad Air,一般ユーザー,1,2026-07-30,2026-08-04,iPad Air のテスト貸出申請,3,pending
+Android Tablet 10,一般ユーザー,1,2026-07-14,2026-08-01,Android Tablet 10 のテスト貸出申請,1,loaned
+タブレットスタンド,一般ユーザー,1,2026-08-01,2026-08-06,タブレットスタンド のテスト貸出申請,2,pending
+1TB Portable SSD,一般ユーザー,1,2026-07-16,2026-08-03,1TB Portable SSD のテスト貸出申請,3,loaned
+USB-C Hub 7-in-1,一般ユーザー,1,2026-08-03,2026-08-08,USB-C Hub 7-in-1 のテスト貸出申請,1,approved
+LANケーブル 5m,山田太郎,3,2026-08-04,2026-08-08,LANケーブル 5m のテスト貸出申請,1,pending
+HDMI Adapter,山田太郎,3,2026-08-01,2026-08-05,HDMI Adapter のテスト貸出申請,1,approved
+延長電源タップ,山田太郎,3,2026-08-02,2026-08-06,延長電源タップ のテスト貸出申請,1,approved
+Magic Mouse,山田太郎,3,2026-08-01,2026-08-04,Magic Mouse のテスト貸出申請,1,rejected
+液晶ディスプレイ 24インチ,山田太郎,3,2026-08-03,2026-08-07,液晶ディスプレイ 24インチ のテスト貸出申請,1,rejected
+65W USB-C Charger,山田太郎,3,2026-08-04,2026-08-09,65W USB-C Charger のテスト貸出申請,1,rejected
+モニターアーム シングル,山田太郎,3,2026-07-29,2026-08-03,モニターアーム シングル のテスト貸出申請,1,loaned
+USB-C Travel Mouse,山田太郎,3,2026-07-30,2026-08-04,USB-C Travel Mouse のテスト貸出申請,1,loaned
+静音ワイヤレスマウス,山田太郎,3,2026-08-01,2026-08-06,静音ワイヤレスマウス のテスト貸出申請,1,loaned
+USB-C Hub 7-in-1,山田太郎,3,2026-08-02,2026-08-07,USB-C Hub 7-in-1 のテスト貸出申請,1,loaned

@@ -1,0 +1,23 @@
+{
+  "name": "AssetFlow",
+  "dockerComposeFile": "../docker-compose.yml",
+  "service": "backend",
+  "overrideCommand": false,
+  "workspaceFolder": "/workspace",
+  "shutdownAction": "none",
+  "forwardPorts": [],
+  "otherPortsAttributes": {
+    "onAutoForward": "ignore"
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-python.python",
+        "ms-python.vscode-pylance",
+        "charliermarsh.ruff",
+        "esbenp.prettier-vscode",
+        "bradlc.vscode-tailwindcss"
+      ]
+    }
+  }
+}

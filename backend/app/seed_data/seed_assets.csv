@@ -1,0 +1,56 @@
+name,category,total_stock,status
+"MacBook Pro 14""",パソコン,6,available
+"Dell 27"" 4K Monitor",モニター,5,available
+HHKB Studio,キーボード,2,available
+Magic Mouse,マウス,10,available
+Herman Miller Aeron,家具,2,available
+Jabra Speak2 75,会議機器,4,available
+Sony WH-1000XM5,ヘッドセット,6,available
+Anker 737 Power Bank,アクセサリー,8,available
+Apple MacBook Air 13,パソコン,7,available
+Surface Laptop 6,パソコン,5,available
+ThinkPad X1 Carbon,パソコン,4,available
+HP EliteBook 840,パソコン,6,available
+ASUS Zenbook 14,パソコン,3,available
+4K Display 32,モニター,8,available
+2K Portable Monitor,モニター,5,available
+液晶ディスプレイ 24インチ,モニター,9,available
+BenQ ScreenBar Halo,周辺機器,4,available
+モニターアーム シングル,周辺機器,11,available
+Logitech MX Keys,キーボード,6,available
+Keychron K3 Pro,キーボード,0,available
+日本語配列キーボード,キーボード,7,available
+テンキー付きキーボード,キーボード,3,available
+Logitech MX Master 3S,マウス,8,available
+USB-C Travel Mouse,マウス,12,available
+静音ワイヤレスマウス,マウス,10,available
+Webカメラ 1080p,カメラ,6,available
+Logitech Brio 4K,カメラ,4,available
+360 Meeting Camera,会議機器,2,available
+Poly Studio P15,会議機器,3,available
+会議用スピーカーフォン,会議機器,5,available
+Yamaha YVC-200,会議機器,4,available
+AirPods Pro 2,ヘッドセット,6,available
+Bose QuietComfort,ヘッドセット,3,available
+有線ヘッドセット,ヘッドセット,8,available
+ノイズキャンセルヘッドホン,ヘッドセット,4,available
+USB-C Hub 7-in-1,アクセサリー,15,available
+HDMI Adapter,アクセサリー,18,available
+65W USB-C Charger,電源機器,12,available
+100W GaN Charger,電源機器,7,available
+延長電源タップ,電源機器,9,available
+iPad Pro 11,タブレット,4,available
+iPad Air,タブレット,5,available
+Android Tablet 10,タブレット,3,available
+タブレットスタンド,アクセサリー,8,available
+1TB Portable SSD,ストレージ,6,available
+2TB Backup HDD,ストレージ,5,available
+外付けSSD 500GB,ストレージ,7,available
+Wi-Fi 6 Router,ネットワーク,3,available
+8-Port Gigabit Switch,ネットワーク,4,available
+LANケーブル 5m,ネットワーク,20,available
+Ergonomic Chair,家具,5,available
+昇降デスク,家具,3,available
+フットレスト,家具,6,available
+卓上マイク,オーディオ,4,available
+Blue Yeti Microphone,オーディオ,2,available

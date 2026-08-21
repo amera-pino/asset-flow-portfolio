@@ -1,0 +1,4 @@
+id,name,login_id,password,role,department
+1,一般ユーザー,user@example.com,AssetFlow2026!,user,営業
+2,管理ユーザー,admin@example.com,AssetFlow2026!,admin,情報システム
+3,山田太郎,taro.yamada@example.com,AssetFlow2026!,user,経理

@@ -1,0 +1,33 @@
+# フロントエンドの不要ファイル・巨大部品
+frontend/node_modules/
+frontend/dist/
+frontend/playwright-report/
+frontend/test-results/
+frontend/.local
+frontend/vite.config.js
+frontend/vite.config.d.ts
+frontend/*.tsbuildinfo
+frontend/**/*.tsbuildinfo
+
+# バックエンドの不要ファイル・仮想環境
+.pycache/
+*.pyc
+backend/__pycache__/
+backend/*.pyc
+backend/.venv/
+backend/venv/
+backend/env/
+
+# 環境変数・機密情報（世界に漏らしてはいけないパスワードなど）
+.env
+*.env
+backend/.env
+frontend/.env
+
+# OSが勝手に作るゴミファイル
+.DS_Store
+Thumbs.db
+
+# その他ファイル
+logs/
+.vscode/

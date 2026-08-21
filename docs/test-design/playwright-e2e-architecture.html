@@ -1,0 +1,558 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Playwright E2E 構成メモ</title>
+    <style>
+      :root {
+        color-scheme: light;
+        --bg: #f5f7fb;
+        --panel: #ffffff;
+        --panel-2: #eef3fb;
+        --text: #172033;
+        --muted: #5b6578;
+        --border: #d7deea;
+        --accent: #2457d6;
+        --accent-2: #173a92;
+        --success: #1f7a3f;
+        --shadow: 0 14px 40px rgba(22, 35, 60, 0.08);
+        --radius: 18px;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family:
+          ui-sans-serif,
+          -apple-system,
+          BlinkMacSystemFont,
+          "Segoe UI",
+          sans-serif;
+        background:
+          radial-gradient(
+            circle at top left,
+            rgba(36, 87, 214, 0.12),
+            transparent 32%
+          ),
+          linear-gradient(180deg, #f8fbff 0%, var(--bg) 100%);
+        color: var(--text);
+      }
+
+      .page {
+        max-width: 1180px;
+        margin: 0 auto;
+        padding: 22px 18px 36px;
+      }
+
+      .hero {
+        background: linear-gradient(135deg, #ffffff 0%, #f3f7ff 100%);
+        border: 1px solid var(--border);
+        border-radius: 22px;
+        box-shadow: var(--shadow);
+        padding: 22px 24px;
+        margin-bottom: 16px;
+      }
+
+      .eyebrow {
+        margin: 0 0 8px;
+        color: var(--muted);
+        font-size: 0.92rem;
+        font-weight: 700;
+        letter-spacing: 0.03em;
+      }
+
+      h1 {
+        margin: 0 0 10px;
+        font-size: clamp(1.6rem, 3vw, 2.1rem);
+      }
+
+      .lead {
+        margin: 0;
+        color: var(--muted);
+        line-height: 1.8;
+      }
+
+      .quick-links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 16px;
+      }
+
+      .chip {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 9px 14px;
+        border-radius: 999px;
+        background: var(--panel);
+        border: 1px solid var(--border);
+        color: var(--accent-2);
+        text-decoration: none;
+        font-weight: 700;
+      }
+
+      .layout {
+        display: grid;
+        grid-template-columns: 260px minmax(0, 1fr);
+        gap: 16px;
+      }
+
+      .toc,
+      .content-card {
+        background: var(--panel);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+      }
+
+      .toc {
+        position: sticky;
+        top: 18px;
+        align-self: start;
+        padding: 16px;
+      }
+
+      .toc h2 {
+        margin: 0 0 10px;
+        font-size: 1rem;
+      }
+
+      .toc ol {
+        margin: 0;
+        padding-left: 18px;
+        display: grid;
+        gap: 8px;
+      }
+
+      .toc a {
+        color: var(--accent-2);
+        text-decoration: none;
+      }
+
+      .content {
+        display: grid;
+        gap: 14px;
+      }
+
+      .content-card {
+        padding: 20px 22px;
+      }
+
+      .content-card h2 {
+        margin: 0 0 12px;
+        font-size: 1.18rem;
+      }
+
+      .content-card h3 {
+        margin: 18px 0 10px;
+        font-size: 1rem;
+      }
+
+      .content-card p {
+        margin: 0 0 12px;
+        line-height: 1.8;
+      }
+
+      .content-card ul,
+      .content-card ol {
+        margin: 0;
+        padding-left: 22px;
+        display: grid;
+        gap: 8px;
+        line-height: 1.7;
+      }
+
+      .note {
+        margin-top: 14px;
+        padding: 12px 14px;
+        border-radius: 14px;
+        background: #f7fbf8;
+        border: 1px solid #cfe6d6;
+      }
+
+      .note strong {
+        color: var(--success);
+      }
+
+      pre {
+        margin: 12px 0 0;
+        padding: 16px;
+        background: #152033;
+        color: #eef4ff;
+        border-radius: 16px;
+        overflow: auto;
+        line-height: 1.6;
+      }
+
+      code {
+        font-family:
+          ui-monospace,
+          "SFMono-Regular",
+          SFMono-Regular,
+          Menlo,
+          Monaco,
+          Consolas,
+          "Liberation Mono",
+          monospace;
+      }
+
+      a {
+        color: var(--accent);
+      }
+
+      @media (max-width: 980px) {
+        .layout {
+          grid-template-columns: 1fr;
+        }
+
+        .toc {
+          position: static;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="page">
+      <section class="hero">
+        <p class="eyebrow">AssetFlow / E2E 実装前メモ</p>
+        <h1>Playwright E2E 構成メモ</h1>
+        <p class="lead">
+          Playwright を導入する前に、配置、責務分担、テストデータ初期化、実装順を整理したメモです。
+          E2E-001〜004 を実装するときの基準資料として使います。
+        </p>
+        <div class="quick-links">
+          <a class="chip" href="./assetflow-test-cases.html">テスト仕様書</a>
+          <a class="chip" href="./frontend-test-design.md">フロントエンドテスト設計</a>
+          <a class="chip" href="./frontend-test-case-generation-guide.md">テストケース作成ガイド</a>
+        </div>
+      </section>
+
+      <div class="layout">
+        <aside class="toc" aria-label="目次">
+          <h2>目次</h2>
+          <ol>
+            <li><a href="#purpose">目的</a></li>
+            <li><a href="#premise">前提</a></li>
+            <li><a href="#structure">推奨構成</a></li>
+            <li><a href="#responsibility">責務分担</a></li>
+            <li><a href="#reset">初期化方針</a></li>
+            <li><a href="#cases">テストケース分割方針</a></li>
+            <li><a href="#style">実装スタイル</a></li>
+            <li><a href="#startup">起動方針</a></li>
+            <li><a href="#order">実装順</a></li>
+            <li><a href="#notes">注意点</a></li>
+          </ol>
+        </aside>
+
+        <section class="content">
+          <article class="content-card" id="purpose">
+            <h2>1. 目的</h2>
+            <p>
+              このメモは、AssetFlow の一般ユーザー向け E2E テストを Playwright で実装する前に、
+              構成方針、責務分担、初期化方針を整理して残すための文書です。
+            </p>
+            <p>2026年8月4日（火）時点では、E2E の主目的を次のように置きます。</p>
+            <ul>
+              <li>実ブラウザで一般ユーザーの主要業務導線を通せることを確認する</li>
+              <li>ポートフォリオとして、利用者が何を操作し、何が画面上で完了するのかを説明できる状態にする</li>
+              <li>単体テスト、結合テストと役割を分け、E2E では API ステータス確認より業務フロー確認を優先する</li>
+            </ul>
+          </article>
+
+          <article class="content-card" id="premise">
+            <h2>2. 前提</h2>
+            <ul>
+              <li>フロントエンドは <code>frontend</code> 配下の React + TypeScript + Vite 構成である</li>
+              <li>バックエンドは <code>backend</code> 配下の FastAPI 構成である</li>
+              <li>ローカル起動はルートの <code>docker-compose.yml</code> を使う</li>
+              <li>E2E はブラウザから実データを操作するため、各ケースの実行前に DB 初期化と seed 再投入が必要である</li>
+              <li>E2E シナリオは <code>docs/test-design/assetflow-test-cases.html</code> の <code>E2Eテスト</code> タブで管理する</li>
+            </ul>
+          </article>
+
+          <article class="content-card" id="structure">
+            <h2>3. 推奨構成</h2>
+            <p>Playwright は <code>frontend</code> 配下に置きます。</p>
+            <p>理由は次のとおりです。</p>
+            <ul>
+              <li>実行主体がブラウザ UI であり、フロントエンドの依存管理と近い場所に置く方が自然である</li>
+              <li><code>package.json</code>、<code>vite</code>、フロントエンド用スクリプトとまとめて管理しやすい</li>
+              <li>このプロジェクト規模では、E2E 専用ワークスペースを別途切るよりも運用負荷が低い</li>
+            </ul>
+            <p>想定ディレクトリは次のとおりです。</p>
+            <pre><code>frontend/
+  package.json
+  playwright.config.ts
+  tests/
+    e2e/
+      general-user-loan-flow.spec.ts
+      auth-access-control.spec.ts
+      pending-request-cancel.spec.ts
+      loaned-request-return.spec.ts
+      fixtures/
+        e2e-test.ts
+      helpers/
+        auth.ts
+        reset.ts
+        selectors.ts</code></pre>
+          </article>
+
+          <article class="content-card" id="responsibility">
+            <h2>4. 責務分担</h2>
+            <h3>4.1 spec ファイル</h3>
+            <p>
+              spec ファイルとは、1 本の E2E テストケースをブラウザ操作として実装するためのファイルです。
+              このファイルには、台帳に書いた <code>操作</code> と <code>確認</code> を、できるだけその順番のまま実装します。
+            </p>
+            <ul>
+              <li>画面操作</li>
+              <li>表示確認</li>
+              <li>トースト確認</li>
+              <li>一覧更新確認</li>
+              <li>ログアウト確認</li>
+            </ul>
+            <p>spec 側に、DB 初期化や seed 再投入の詳細を直接書き込みすぎません。</p>
+
+            <h3>4.2 fixture / helper</h3>
+            <p>
+              fixture / helper とは、複数のテストケースで共通して使う準備処理や補助処理をまとめるためのファイルです。
+              同じ処理を各 spec に何度も書かないようにするため、複数ケースで繰り返す処理はここへ寄せます。
+            </p>
+            <ul>
+              <li>DB 初期化</li>
+              <li>seed 再投入</li>
+              <li>ログイン補助</li>
+              <li>よく使う要素特定処理の共通化</li>
+              <li>待機処理</li>
+            </ul>
+            <p>E2E のシナリオ本文と、実行環境の準備処理を分離することを優先します。</p>
+
+            <h3>4.3 アプリ本体</h3>
+            <p>アプリ本体には、E2E 専用の分岐やテスト専用 UI を極力追加しません。</p>
+            <ul>
+              <li>実運用に近い UI をそのまま操作する</li>
+              <li>Playwright で画面上のボタンや一覧行を探すときは、備品名やカテゴリなど、画面に表示されている情報を使って対象を特定する</li>
+            </ul>
+            <p>
+              たとえば、備品一覧で貸出申請ボタンを押すときは、
+              備品名やカテゴリの表示を手がかりにして、対象の行にあるボタンを操作します。
+            </p>
+          </article>
+
+          <article class="content-card" id="reset">
+            <h2>5. 初期化方針</h2>
+            <p>E2E は状態変更を伴うため、各ケースの独立性を最優先します。</p>
+            <p>
+              各ケース実行前に、DB を初期状態へ戻したうえで seed データを再投入します。
+            </p>
+            <h3>5.1 初期化対象のテーブル</h3>
+            <p>
+              ここでいう初期状態とは、少なくとも次のテーブルが E2E 実行前の想定状態に戻っていることを指します。
+            </p>
+            <ul>
+              <li><code>users</code></li>
+              <li><code>assets</code></li>
+              <li><code>asset_loan_requests</code></li>
+              <li><code>user_sessions</code> : ログイン中ユーザーのセッション情報を保持するテーブル。未ログイン状態から E2E を始めるため、このテーブルの状態も初期化対象に含める</li>
+            </ul>
+            <h3>5.2 DB 初期化手順</h3>
+            <p>各ケース実行前に、下記の DB 初期化と seed 再投入を実施します。</p>
+            <p>以下の <code>docker compose</code> コマンドは、リポジトリルートをカレントディレクトリとして実行します。</p>
+            <ol>
+              <li>DB コンテナ上のデータを E2E 用初期状態へ戻す</li>
+              <ul>
+                <li><code>users</code>、<code>assets</code>、<code>asset_loan_requests</code>、<code>user_sessions</code> を truncate して、ID 採番も初期状態へ戻す</li>
+                <li>実行コマンド例:</li>
+                <li><code>docker compose exec db psql -U assetflow -d assetflow -c "TRUNCATE TABLE user_sessions, asset_loan_requests, assets, users RESTART IDENTITY CASCADE;"</code></li>
+                <li>このコマンドで、DB コンテナ上の対象テーブルだけを E2E 実行前の空状態に戻す</li>
+              </ul>
+              <li><code>backend/app/seed_data</code> 配下の seed 用 CSV を再投入する</li>
+              <ul>
+                <li>実行コマンド例:</li>
+                <li><code>docker compose exec -e PYTHONPATH=. backend python app/seeds.py</code></li>
+                <li>このコマンドで、マイグレーション確認後に users、assets、asset_loan_requests の seed データを再投入する</li>
+              </ul>
+              <li>seed 再投入後の状態で E2E ケースを 1 本だけ実行する</li>
+            </ol>
+            <p>ケース間で DB 状態を共有しません。</p>
+            <div class="note">
+              <strong>補足:</strong>
+              Playwright 実装時には、初期化コマンドまたは fixture 名を固定します。
+            </div>
+          </article>
+
+          <article class="content-card" id="cases">
+            <h2>6. テストケース分割方針</h2>
+            <p>実装対象候補は、次の 4 本です。</p>
+            <ul>
+              <li><code>E2E-001</code>: 一般ユーザー申請動線</li>
+              <li><code>E2E-002</code>: 一般ユーザー認証・アクセス制御</li>
+              <li><code>E2E-003</code>: 一般ユーザー承認待ち申請キャンセル動線</li>
+              <li><code>E2E-004</code>: 一般ユーザー貸出中申請返却動線</li>
+            </ul>
+            <p>この分け方を採用する理由は次のとおりです。</p>
+            <ul>
+              <li>1 本あたりの主目的が明確になる</li>
+              <li>失敗時の切り分けがしやすい</li>
+              <li>実装順を柔軟に調整しやすい</li>
+              <li>ポートフォリオ説明時に業務フローを分けて見せられる</li>
+            </ul>
+          </article>
+
+          <article class="content-card" id="style">
+            <h2>7. 実装スタイル</h2>
+            <h3>7.1 まずは単純に書く</h3>
+            <p>
+              初期実装では、共通処理を無理にまとめすぎず、まずは 1 本ずつの spec を読めば
+              「何を操作して、何を確認するテストなのか」が分かる状態を優先します。
+            </p>
+            <ul>
+              <li>まずは spec を読めば台帳との対応が分かる状態を目指す</li>
+              <li>ログイン処理や DB 初期化のように、明らかに複数ケースで共通して使う処理だけを先に分ける</li>
+              <li>それ以外の処理は、実装を進めながら重複が増えた時点で共通化を検討する</li>
+            </ul>
+            <p>
+              ここでいう「共通化」とは、同じ処理を別ファイルへ切り出して、複数のテストケースから再利用できるようにすることです。
+              最初から細かく分けすぎると、どこに何が書いてあるか分かりにくくなりやすいため、初期段階では読みやすさを優先します。
+            </p>
+
+            <h3>7.2 locator の方針</h3>
+            <p>
+              locator とは、Playwright で「どのボタンを押すか」「どの文字列を確認するか」を特定するための指定方法です。
+              たとえば、備品名の文字列、ボタン名、見出し名などを使って画面上の要素を見つけます。
+            </p>
+            <p>対象要素は、可能な限り次の情報で特定します。</p>
+            <ul>
+              <li>備品名</li>
+              <li>カテゴリ</li>
+              <li>有効在庫数</li>
+              <li>状態</li>
+            </ul>
+            <p>台帳上で <code>現行 seed では No.1</code> のような補足を書くのは許容します。</p>
+
+            <h3>7.3 実行設定</h3>
+            <ul>
+              <li>
+                <code>baseURL: process.env.PLAYWRIGHT_BASE_URL ?? "http://localhost:5173"</code>
+                <ul>
+                  <li><code>baseURL</code> は、Playwright がブラウザを開くときの起点 URL です。</li>
+                  <li>ローカル既定値は <code>http://localhost:5173</code> です。</li>
+                  <li>CI でも現時点では環境変数で <code>http://localhost:5173</code> を渡し、実行モード内で origin を統一します。</li>
+                </ul>
+              </li>
+              <li>
+                <code>workers: 1</code>
+                <ul>
+                  <li><code>workers</code> は、テストを同時に何本並列実行するかを決める設定です。</li>
+                  <li>今回は状態変更を伴う E2E が中心なので、まずは 1 にして 1 本ずつ順番に実行します。</li>
+                  <li>これにより、在庫数や申請状態の競合で失敗する可能性を減らします。</li>
+                </ul>
+              </li>
+              <li>
+                <code>retries</code>
+                <ul>
+                  <li><code>retries</code> は、テストが失敗したときに自動で再実行する回数を決める設定です。</li>
+                  <li>ローカルでは <code>0</code> にします。失敗したらすぐ原因を確認したいからです。</li>
+                  <li>CI 導入時は <code>1</code> または <code>2</code> を検討します。ネットワーク待ちや描画待ちなどの一時的な失敗を吸収しやすくするためです。</li>
+                </ul>
+              </li>
+              <li>
+                <code>trace: "on-first-retry"</code>
+                <ul>
+                  <li><code>trace</code> は、テスト中の画面遷移や操作履歴を記録する設定です。</li>
+                  <li><code>on-first-retry</code> は、最初の失敗時に再実行したテストだけ記録する設定です。</li>
+                  <li>常時記録よりも保存量を抑えつつ、失敗時に原因を追いやすくできます。</li>
+                  <li>ただし、ローカルで <code>retries: 0</code> の間は再試行が発生しないため、通常は trace は保存されません。</li>
+                  <li>ローカルで trace を確認したいときは、一時的に <code>trace: "on"</code> または <code>--trace on</code> を使います。</li>
+                </ul>
+              </li>
+              <li>
+                <code>screenshot: "only-on-failure"</code>
+                <ul>
+                  <li><code>screenshot</code> は、テスト実行中の画面画像を保存する設定です。</li>
+                  <li><code>only-on-failure</code> は、失敗したテストだけ画像を残す設定です。</li>
+                  <li>成功時の画像を大量に残さず、失敗時の確認に必要な情報だけを保存できます。</li>
+                </ul>
+              </li>
+              <li>
+                <code>video: "retain-on-failure"</code>
+                <ul>
+                  <li><code>video</code> は、テスト中の画面操作を動画として保存する設定です。</li>
+                  <li><code>retain-on-failure</code> は、失敗したテストの動画だけを残す設定です。</li>
+                  <li>失敗時の再現状況を後から見返しやすくしつつ、不要な動画保存を減らせます。</li>
+                </ul>
+              </li>
+            </ul>
+          </article>
+
+          <article class="content-card" id="startup">
+            <h2>8. 起動方針</h2>
+            <p>ローカルでは、既存の <code>docker compose up -d</code> を基本にします。</p>
+            <ul>
+              <li><code>db</code></li>
+              <li><code>backend</code></li>
+              <li><code>frontend</code></li>
+            </ul>
+            <p>を起動したうえで、通常開発を進める想定です。</p>
+            <p>E2E 実行時は、Playwright・frontend・backend の origin 方針を同じ値にそろえます。</p>
+            <ul>
+              <li>Playwright の <code>baseURL</code></li>
+              <li>frontend dev server の起動 host</li>
+              <li><code>VITE_API_BASE_URL</code></li>
+              <li>backend / frontend の疎通確認 URL</li>
+            </ul>
+            <p>
+              <code>localhost</code> と <code>127.0.0.1</code> のどちらを使うか自体は本質ではありません。
+              大事なのは、1 回の実行で使う origin を全部同じ方針にそろえることです。
+            </p>
+            <p>
+              ローカル既定では、<code>PLAYWRIGHT_MANAGED_SERVICES</code> が <code>false</code> でない場合に
+              global setup が <code>docker compose up -d db backend frontend</code> を実行します。
+              readiness check は <code>PLAYWRIGHT_BASE_URL</code> と <code>PLAYWRIGHT_BACKEND_URL</code> を参照し、
+              未指定時は <code>http://localhost:5173</code> と <code>http://localhost:8000</code> を使います。
+            </p>
+            <p>
+              CI mode では、<code>db</code> と <code>backend</code> を <code>docker compose up -d db backend</code> で起動し、
+              frontend は <code>VITE_API_BASE_URL=http://localhost:8000 npm run dev -- --host localhost --strictPort</code>
+              で起動します。Playwright には <code>PLAYWRIGHT_BASE_URL=http://localhost:5173</code> と
+              <code>PLAYWRIGHT_BACKEND_URL=http://localhost:8000</code> を渡します。
+              backend の CORS は <code>http://localhost:5173</code> と <code>http://127.0.0.1:5173</code> の両方を許可します。
+            </p>
+            <p>
+              現時点では、認証導線まで含めて安定して通る <code>localhost</code> 系を正本にしています。
+              ローカルと CI で二系統あっても問題ありませんが、それぞれのモード内では必ず origin を統一します。
+            </p>
+          </article>
+
+          <article class="content-card" id="order">
+            <h2>9. 実装順</h2>
+            <ol>
+              <li>Playwright 導入</li>
+              <li><code>playwright.config.ts</code> 作成</li>
+              <li>DB 初期化 + seed 再投入の fixture / helper 作成</li>
+              <li><code>E2E-001</code> 実装</li>
+              <li><code>E2E-001</code> の安定化</li>
+              <li><code>E2E-002</code> 以降を順次追加</li>
+            </ol>
+          </article>
+
+          <article class="content-card" id="notes">
+            <h2>10. 注意点</h2>
+            <ul>
+              <li>各ケースは独立実行を前提にする</li>
+              <li>E2E で API ステータス確認まで厚く書きすぎない</li>
+              <li>単体テスト、結合テストと責務がぶつかる場合は E2E 側を薄くする</li>
+              <li>画面に存在しない情報は確認項目に書かない</li>
+              <li>実装 AI が迷わない具体性を優先する</li>
+            </ul>
+          </article>
+        </section>
+      </div>
+    </main>
+  </body>
+</html>
